@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".ui.MainActivity">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+                name="viewModel"
+                type="it.chutien.allwaylocaldb.ui.MainActivityViewModel"
+        />
+    </data>
+    <LinearLayout
+            android:id="@+id/parent_view"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/insert_room"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="Room Insert"
+                android:theme="@style/Button.Primary"/>
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/get_room"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="Room Get"
+                style="@style/Button.Primary.Borderless"/>
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/insert_realm"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="Realm Insert"
+                android:theme="@style/Button.Accent"/>
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/get_realm"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="Realm Get"
+                style="@style/Button.Accent.Borderless"/>
+    </LinearLayout>
+
+
+</layout>
