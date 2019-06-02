@@ -71,7 +71,7 @@ fun createRealm(
 
 fun createRoom(dbRoomName: String, context: Context) = Room
     .databaseBuilder(context, RoomDb::class.java, dbRoomName)
-//    .addMigrations(RoomMigration(1, 2))
+//    .addMigrations(RoomMigration(1, 2)) // multi migration here
     .build()
 
 fun createDogDao(roomDb: RoomDb) = roomDb.dogDao()

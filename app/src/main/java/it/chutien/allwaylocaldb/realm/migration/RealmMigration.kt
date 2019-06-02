@@ -13,5 +13,6 @@ class RealmMigrations : RealmMigration {
             val dogSchema = schema.get("DogRealmObject")
             dogSchema?.addField("age", Int::class.java)
         }
+        //More migration here...
     }
 }
