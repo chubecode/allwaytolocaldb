@@ -35,6 +35,7 @@ class AdapterData constructor
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         // each data item is just a string in this case
         var name: TextView = v.findViewById(R.id.name) as TextView
+        var id: TextView = v.findViewById(R.id.id) as TextView
         var date: TextView = v.findViewById(R.id.date) as TextView
         var lyt_parent: LinearLayout = v.findViewById(R.id.lyt_parent) as LinearLayout
 
@@ -52,6 +53,7 @@ class AdapterData constructor
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ViewHolder) {
             val o = items[position]
+            holder.id.text = o.id
             holder.name.text = o.name
             val dateFormat = "HH:mm:ss dd/MM/yy"
             holder.date.text = o.date.format(DateTimeFormatter.ofPattern(dateFormat))

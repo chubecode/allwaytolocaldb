@@ -28,4 +28,8 @@ interface DBRepository {
 
     fun insertByBox(dogBox: DogBox)
 
+    fun deleteAllRoom()
+    fun deleteAllRealm()
+    fun deleteAllBox()
+
 }

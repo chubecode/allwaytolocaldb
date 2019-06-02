@@ -18,6 +18,20 @@ class DBRepositoryImpl(
     val realm: Realm,
     val boxStore: BoxStore
 ) : DBRepository {
+    override fun deleteAllRoom() {
+        GlobalScope.async {
+            dogDao.deleteAll()
+        }
+    }
+
+    override fun deleteAllRealm() {
+        realm.executeTransaction { realm -> realm.deleteAll() }
+    }
+
+    override fun deleteAllBox() {
+        boxStore.boxFor(DogBox::class.java).removeAll()
+    }
+
     override fun getSizeObjectBox(): Int {
         return boxStore.boxFor(DogBox::class.java).count().toInt()
     }
@@ -63,7 +77,6 @@ class DBRepositoryImpl(
         realmResults.subList(0, realmResults.size)
         return ArrayList(realm.copyFromRealm(realmResults))
     }
-
 
 
 }

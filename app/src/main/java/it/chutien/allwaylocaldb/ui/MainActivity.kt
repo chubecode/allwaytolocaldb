@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -84,13 +85,13 @@ class MainActivity : AppCompatActivity() {
 
         view.findViewById<TextView>(R.id.query_time).text = "Query Time: ${System.currentTimeMillis() - timeQuery} ms"
         if ((dogs?.size ?: 0 > 0)) {
-            view.findViewById<TextView>(R.id.name).text = "By Room(${dogs?.size})"
+            view.findViewById<TextView>(R.id.name).text = "By Room"
         }
         if ((dogRealms?.size ?: 0 > 0)) {
-            view.findViewById<TextView>(R.id.name).text = "By Realm(${dogRealms?.size})"
+            view.findViewById<TextView>(R.id.name).text = "By Realm"
         }
         if ((dogBoxs?.size ?: 0 > 0)) {
-            view.findViewById<TextView>(R.id.name).text = "By Box(${dogBoxs?.size})"
+            view.findViewById<TextView>(R.id.name).text = "By Box"
         }
 
         val recyclerData = view.findViewById<RecyclerView>(R.id.recycler_data)
@@ -121,6 +122,18 @@ class MainActivity : AppCompatActivity() {
 
 
         view.findViewById<AppCompatImageButton>(R.id.bt_close).setOnClickListener {
+            mBottomSheetDialog?.dismiss()
+        }
+        view.findViewById<AppCompatButton>(R.id.delete_all).setOnClickListener {
+            if ((dogs?.size ?: 0 > 0)) {
+                viewModel.deleteRoomDb()
+            }
+            if ((dogRealms?.size ?: 0 > 0)) {
+                viewModel.deleteRealmDb()
+            }
+            if ((dogBoxs?.size ?: 0 > 0)) {
+                viewModel.deleteBoxDb()
+            }
             mBottomSheetDialog?.dismiss()
         }
 

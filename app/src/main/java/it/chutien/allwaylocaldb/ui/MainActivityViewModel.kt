@@ -47,6 +47,18 @@ class MainActivityViewModel(
         return repository.getByBox()
     }
 
+    fun deleteRoomDb() {
+        repository.deleteAllRoom()
+    }
+
+    fun deleteRealmDb() {
+        repository.deleteAllRealm()
+    }
+
+    fun deleteBoxDb() {
+        repository.deleteAllBox()
+    }
+
     fun insertRealmDb() {
         var dogRealmObject = DogRealmObject(name = Fakeit.name().firstName(), date = Calendar.getInstance().time)
         repository.insertByRealm(dogRealmObject)
