@@ -51,6 +51,22 @@
                     android:layout_gravity="center"
                     android:text="Add New Table"
                     style="@style/Button.Accent.Borderless"/>
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/insert_box"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Box Insert"
+                    android:theme="@style/Button.Green"/>
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/add_table_box"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Add New Table"
+                    style="@style/Button.Green..Borderless"/>
 
 
         </LinearLayout>
@@ -59,10 +75,9 @@
                 android:id="@+id/bottom_sheet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_behavior="@string/bottom_sheet_behavior" />
+                app:layout_behavior="@string/bottom_sheet_behavior"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
 
 </layout>

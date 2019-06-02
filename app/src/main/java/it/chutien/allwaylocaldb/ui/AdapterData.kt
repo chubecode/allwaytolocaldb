@@ -9,6 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import it.chutien.allwaylocaldb.R
 import it.chutien.allwaylocaldb.room.model.Dog
 import java.util.*
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.format.DateTimeFormatter
+
 
 class AdapterData constructor
     (
@@ -31,6 +35,7 @@ class AdapterData constructor
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         // each data item is just a string in this case
         var name: TextView = v.findViewById(R.id.name) as TextView
+        var date: TextView = v.findViewById(R.id.date) as TextView
         var lyt_parent: LinearLayout = v.findViewById(R.id.lyt_parent) as LinearLayout
 
     }
@@ -43,10 +48,13 @@ class AdapterData constructor
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ViewHolder) {
             val o = items[position]
             holder.name.text = o.name
+            val dateFormat = "HH:mm:ss dd/MM/yy"
+            holder.date.text = o.date.format(DateTimeFormatter.ofPattern(dateFormat))
 
             holder.lyt_parent.setOnClickListener { view ->
                 if (onItemClickListener != null) {

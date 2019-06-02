@@ -9,6 +9,9 @@ apply plugin: 'kotlin-kapt'
 //Realm
 apply plugin: 'realm-android'
 
+//ObjectBox
+apply plugin: 'io.objectbox'
+
 android {
     compileSdkVersion 28
     dataBinding {
@@ -51,6 +54,9 @@ dependencies {
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+
+    //ObjectBox
+    implementation "io.objectbox:objectbox-kotlin:$objectboxVersion"
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"

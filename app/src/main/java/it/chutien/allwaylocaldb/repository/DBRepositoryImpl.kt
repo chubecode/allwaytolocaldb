@@ -1,7 +1,9 @@
 package it.chutien.allwaylocaldb.repository
 
+import io.objectbox.BoxStore
 import io.realm.Realm
 import io.realm.RealmList
+import it.chutien.allwaylocaldb.objectbox.DogBox
 import it.chutien.allwaylocaldb.realm.model.DogRealmObject
 import it.chutien.allwaylocaldb.room.dao.DogDao
 import it.chutien.allwaylocaldb.room.model.Dog
@@ -13,8 +15,21 @@ import kotlinx.coroutines.async
  */
 class DBRepositoryImpl(
     val dogDao: DogDao,
-    val realm: Realm
+    val realm: Realm,
+    val boxStore: BoxStore
 ) : DBRepository {
+    override fun getSizeObjectBox(): Int {
+        return boxStore.boxFor(DogBox::class.java).count().toInt()
+    }
+
+    override fun getByBox(): ArrayList<DogBox> {
+        return ArrayList(boxStore.boxFor(DogBox::class.java).all)
+    }
+
+    override fun insertByBox(dogBox: DogBox) {
+        boxStore.boxFor(DogBox::class.java).put(dogBox)
+    }
+
     override suspend fun getSizeRom(): Int {
         return GlobalScope.async {
             dogDao.getSize()
@@ -48,6 +63,7 @@ class DBRepositoryImpl(
         realmResults.subList(0, realmResults.size)
         return ArrayList(realm.copyFromRealm(realmResults))
     }
+
 
 
 }

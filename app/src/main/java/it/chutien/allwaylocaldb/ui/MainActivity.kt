@@ -2,7 +2,6 @@ package it.chutien.allwaylocaldb.ui
 
 import android.os.Build
 import android.os.Bundle
-import android.provider.Contacts
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
@@ -18,6 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import it.chutien.allwaylocaldb.R
 import it.chutien.allwaylocaldb.databinding.ActivityMainBinding
+import it.chutien.allwaylocaldb.objectbox.DogBox
 import it.chutien.allwaylocaldb.realm.model.DogRealmObject
 import it.chutien.allwaylocaldb.room.model.Dog
 import kotlinx.android.synthetic.main.activity_main.*
@@ -48,17 +48,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         insert_room.setOnClickListener {
-            Snackbar.make(parent_view, "Inserted ${viewModel.insertRoomDb()}", Snackbar.LENGTH_SHORT).show()
-            timeQuery = System.currentTimeMillis()
+            viewModel.insertRoomDb()
             GlobalScope.launch(Dispatchers.Main) {
+                timeQuery = System.currentTimeMillis()
                 showBottomSheetDialog(dogs = viewModel.getRoomDb())
             }
         }
 
         insert_realm.setOnClickListener {
-                Snackbar.make(parent_view, "Inserted ${viewModel.insertRealmDb()}", Snackbar.LENGTH_SHORT).show()
-                timeQuery = System.currentTimeMillis()
-                showBottomSheetDialog(dogRealms = viewModel.getRealmDb())
+            viewModel.insertRealmDb()
+            timeQuery = System.currentTimeMillis()
+            showBottomSheetDialog(dogRealms = viewModel.getRealmDb())
+
+        }
+        insert_box.setOnClickListener {
+            viewModel.insertBoxDb()
+            timeQuery = System.currentTimeMillis()
+            showBottomSheetDialog(dogBoxs = viewModel.getBoxDb())
 
         }
 
@@ -68,20 +74,33 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun showBottomSheetDialog(
         dogs: ArrayList<Dog>? = null,
-        dogRealms: ArrayList<DogRealmObject> = ArrayList()
+        dogRealms: ArrayList<DogRealmObject>? = null,
+        dogBoxs: ArrayList<DogBox>? = null
     ) {
-        val isRealm = dogs == null
         if (mBehavior?.state == BottomSheetBehavior.STATE_EXPANDED) {
             mBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
         }
         val view = layoutInflater.inflate(R.layout.sheet_floating, null)
 
         view.findViewById<TextView>(R.id.query_time).text = "Query Time: ${System.currentTimeMillis() - timeQuery} ms"
-        view.findViewById<TextView>(R.id.name).text = if (isRealm) "By Realm" else "By Room"
+        if ((dogs?.size ?: 0 > 0)) {
+            view.findViewById<TextView>(R.id.name).text = "By Room(${dogs?.size})"
+        }
+        if ((dogRealms?.size ?: 0 > 0)) {
+            view.findViewById<TextView>(R.id.name).text = "By Realm(${dogRealms?.size})"
+        }
+        if ((dogBoxs?.size ?: 0 > 0)) {
+            view.findViewById<TextView>(R.id.name).text = "By Box(${dogBoxs?.size})"
+        }
+
         val recyclerData = view.findViewById<RecyclerView>(R.id.recycler_data)
         recyclerData.layoutManager = LinearLayoutManager(this)
 
-        val adapter = AdapterData(if (isRealm) convertToDogList(dogRealms) else dogs ?: ArrayList())
+        val adapter = AdapterData(
+            if (dogs?.size ?: 0 > 0) dogs ?: ArrayList() else {
+                convertToDogList(if (dogRealms?.size ?: 0 > 0) dogRealms else dogBoxs)
+            }
+        )
         adapter.setOnItemClickListener(object : AdapterData.OnItemClickListener {
             override fun onItemClick(v: View, obj: Dog, pos: Int) {
                 Snackbar.make(view, "Clicked ${obj.name}", Snackbar.LENGTH_SHORT).show()
@@ -108,16 +127,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun convertToDogList(dogRealms: ArrayList<DogRealmObject>): ArrayList<Dog> {
+    private fun convertToDogList(dogNeedConverts: java.util.ArrayList<out Any>?): ArrayList<Dog> {
         val dogs: ArrayList<Dog> = ArrayList()
 
-        for (dogRealm in dogRealms) {
-            val dog = Dog(
-                dogRealm.id,
-                dogRealm.name ?: "",
-                dogRealm.date?.toInstant()?.atOffset(ZoneOffset.UTC) ?: OffsetDateTime.now()
-            )
-            dogs.add(dog)
+        if (dogNeedConverts != null) {
+            for (dogConvert in dogNeedConverts) {
+
+                val dog = if (dogConvert is DogRealmObject) Dog(
+                    dogConvert.id,
+                    dogConvert.name ?: "",
+                    dogConvert.date?.toInstant()?.atOffset(ZoneOffset.UTC) ?: OffsetDateTime.now()
+                ) else Dog(
+                    (dogConvert as DogBox).id.toString(),
+                    dogConvert.name,
+                    dogConvert.date.toInstant()?.atOffset(ZoneOffset.UTC) ?: OffsetDateTime.now()
+                )
+                dogs.add(dog)
+            }
         }
 
         return dogs
@@ -133,6 +159,7 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Main) {
             insert_room.text = "ROOM INSERT (${viewModel.getSizeRoom()})"
             insert_realm.text = "REALM INSERT (${viewModel.getSizeRealm()})"
+            insert_box.text = "REALM INSERT (${viewModel.getSizeBox()})"
         }
     }
 }

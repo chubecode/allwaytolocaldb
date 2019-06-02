@@ -3,10 +3,12 @@ package it.chutien.allwaylocaldb.di
 import android.content.Context
 import androidx.room.Room
 import androidx.room.migration.Migration
+import io.objectbox.BoxStore
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmMigration
 import io.realm.RealmSchema
+import it.chutien.allwaylocaldb.objectbox.MyObjectBox
 import it.chutien.allwaylocaldb.repository.DBRepository
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -26,10 +28,16 @@ val viewModelModule = module(override = true) {
     single { createRoom(get(), get()) }
     single { createDogDao(get()) }
 
-    single<DBRepository> { DBRepositoryImpl(get(),get()) }
+    single { createObjectBox(get()) }
+
+
+
+    single<DBRepository> { DBRepositoryImpl(get(),get(),get()) }
 
     viewModel { MainActivityViewModel(get()) }
 }
+
+
 
 //
 //fun createRealmMyMigration(): RealmMigration {
@@ -63,4 +71,9 @@ fun createRoom(dbRoomName: String, context: Context) =  Room.databaseBuilder(con
 
 fun createDogDao(roomDb: RoomDb) = roomDb.dogDao()
 
+fun createObjectBox(context: Context) : BoxStore {
+    return MyObjectBox.builder()
+        .androidContext(context)
+        .build()
+}
 
