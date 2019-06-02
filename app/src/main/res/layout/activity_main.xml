@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".ui.MainActivity">
     <data>
         <import type="android.view.View"/>
@@ -10,46 +10,59 @@
                 type="it.chutien.allwaylocaldb.ui.MainActivityViewModel"
         />
     </data>
-    <LinearLayout
-            android:id="@+id/parent_view"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_height="match_parent">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="match_parent"
+                                                         android:layout_height="match_parent">
+        <LinearLayout
+                android:id="@+id/parent_view"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/insert_room"
-                android:layout_width="200dp"
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/insert_room"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Room Insert"
+                    android:theme="@style/Button.Primary"/>
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/add_table_room"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Add New Table"
+                    style="@style/Button.Primary.Borderless"/>
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/insert_realm"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Realm Insert"
+                    android:theme="@style/Button.Accent"/>
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/add_table_realm"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Add New Table"
+                    style="@style/Button.Accent.Borderless"/>
+
+
+        </LinearLayout>
+        <!--bottom sheet container-->
+        <FrameLayout
+                android:id="@+id/bottom_sheet"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:text="Room Insert"
-                android:theme="@style/Button.Primary"/>
-        <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/get_room"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:text="Room Get"
-                style="@style/Button.Primary.Borderless"/>
-        <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/insert_realm"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:text="Realm Insert"
-                android:theme="@style/Button.Accent"/>
-        <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/get_realm"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:text="Realm Get"
-                style="@style/Button.Accent.Borderless"/>
-    </LinearLayout>
+                app:layout_behavior="@string/bottom_sheet_behavior" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 
 </layout>

@@ -11,10 +11,14 @@ interface DBRepository {
 
     fun insertByRom(dog: Dog)
 
-    fun getByRom(): List<Dog>
+    suspend fun getByRom(): ArrayList<Dog>
+
+    suspend fun getSizeRom(): Int
 
     fun insertByRealm(dogRealmObject: DogRealmObject)
 
-    fun getByRealm(): MutableList<DogRealmObject>
+    fun getByRealm(): ArrayList<DogRealmObject>
+
+    fun getSizeRealm(): Int
 
 }

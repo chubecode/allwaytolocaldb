@@ -9,6 +9,7 @@ import it.chutien.allwaylocaldb.repository.DBRepository
 import it.chutien.allwaylocaldb.room.model.Dog
 import java.time.OffsetDateTime
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by ChuTien on ${1/25/2017}.
@@ -23,7 +24,7 @@ class MainActivityViewModel(
         return dogRealmObject.name.toString()
     }
 
-    fun getRealmDb(): MutableList<DogRealmObject> {
+    fun getRealmDb(): ArrayList<DogRealmObject> {
         return repository.getByRealm()
     }
 
@@ -34,8 +35,16 @@ class MainActivityViewModel(
         return dog.name
     }
 
-    fun getRoomDb(): List<Dog> {
+    suspend fun getRoomDb(): ArrayList<Dog> {
         return repository.getByRom()
+    }
+
+    suspend fun getSizeRoom(): Int {
+        return repository.getSizeRom()
+    }
+
+    fun getSizeRealm(): Int {
+        return repository.getSizeRealm()
     }
 
 

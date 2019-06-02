@@ -15,33 +15,39 @@ class DBRepositoryImpl(
     val dogDao: DogDao,
     val realm: Realm
 ) : DBRepository {
+    override suspend fun getSizeRom(): Int {
+        return GlobalScope.async {
+            dogDao.getSize()
+        }.await()
+    }
+
+    override fun getSizeRealm(): Int {
+        return realm.where(DogRealmObject::class.java).count().toInt()
+    }
+
     override fun insertByRom(dog: Dog) {
         GlobalScope.async {
             dogDao.insert(dog)
         }
+
     }
 
-    override fun getByRom(): List<Dog> {
-        var finalList: List<Dog> = ArrayList()
-        GlobalScope.async {
-            finalList = dogDao.getAll()
-        }
-        return finalList
+    override suspend fun getByRom(): ArrayList<Dog> {
+        return GlobalScope.async {
+            ArrayList(dogDao.getAll())
+        }.await()
+
     }
 
     override fun insertByRealm(dogRealmObject: DogRealmObject) {
-        realm.executeTransaction(object : Realm.Transaction {
-            override fun execute(realm: Realm) {
-                realm.insert(dogRealmObject)
-            }
-        })
+        realm.executeTransaction { realm -> realm.insert(dogRealmObject) }
     }
 
-    override fun getByRealm(): MutableList<DogRealmObject> {
+    override fun getByRealm(): ArrayList<DogRealmObject> {
         val realmResults = realm.where(DogRealmObject::class.java).findAll()
-        val finalList = RealmList<DogRealmObject>()
-        finalList.addAll(realmResults.subList(0, realmResults.size))
-        return realm.copyFromRealm(realmResults)
+        realmResults.subList(0, realmResults.size)
+        return ArrayList(realm.copyFromRealm(realmResults))
     }
+
 
 }
