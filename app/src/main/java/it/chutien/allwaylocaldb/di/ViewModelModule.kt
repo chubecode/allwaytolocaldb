@@ -9,12 +9,14 @@ import io.realm.RealmConfiguration
 import io.realm.RealmMigration
 import io.realm.RealmSchema
 import it.chutien.allwaylocaldb.objectbox.MyObjectBox
+import it.chutien.allwaylocaldb.realm.migration.RealmMigrations
 import it.chutien.allwaylocaldb.repository.DBRepository
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import it.chutien.allwaylocaldb.ui.MainActivityViewModel
 import it.chutien.allwaylocaldb.repository.DBRepositoryImpl
 import it.chutien.allwaylocaldb.room.db.RoomDb
+import it.chutien.allwaylocaldb.room.migration.RoomMigration
 
 /**
  * Created by ChuTien on ${1/25/2017}.
@@ -24,7 +26,7 @@ val viewModelModule = module(override = true) {
     single { createDatabaseRoomName() }
 //    single { createRealmMySchemaModule() }
 //    single { createRealmMyMigration() }
-    single { createRealm(get(),get()) }
+    single { createRealm(get(), get()) }
     single { createRoom(get(), get()) }
     single { createDogDao(get()) }
 
@@ -32,11 +34,10 @@ val viewModelModule = module(override = true) {
 
 
 
-    single<DBRepository> { DBRepositoryImpl(get(),get(),get()) }
+    single<DBRepository> { DBRepositoryImpl(get(), get(), get()) }
 
     viewModel { MainActivityViewModel(get()) }
 }
-
 
 
 //
@@ -61,17 +62,21 @@ fun createRealm(
     val config = RealmConfiguration.Builder()
         .name(dbRealmName)
         .schemaVersion(1)
+//        .migration(RealmMigrations())
         .build()
     return Realm.getInstance(config)
 
 }
 
 
-fun createRoom(dbRoomName: String, context: Context) =  Room.databaseBuilder(context, RoomDb::class.java, dbRoomName).build()
+fun createRoom(dbRoomName: String, context: Context) = Room
+    .databaseBuilder(context, RoomDb::class.java, dbRoomName)
+//    .addMigrations(RoomMigration(1, 2))
+    .build()
 
 fun createDogDao(roomDb: RoomDb) = roomDb.dogDao()
 
-fun createObjectBox(context: Context) : BoxStore {
+fun createObjectBox(context: Context): BoxStore {
     return MyObjectBox.builder()
         .androidContext(context)
         .build()

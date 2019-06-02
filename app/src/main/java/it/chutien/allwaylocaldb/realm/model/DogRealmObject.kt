@@ -12,4 +12,5 @@ open class DogRealmObject(
     var id: String = UUID.randomUUID().toString(),
     var name: String? = null,
     var date: Date? = null
+//    var age: Int = 9
 ) : RealmObject()

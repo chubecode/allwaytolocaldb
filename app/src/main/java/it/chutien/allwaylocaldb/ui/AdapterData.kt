@@ -37,6 +37,7 @@ class AdapterData constructor
         var name: TextView = v.findViewById(R.id.name) as TextView
         var id: TextView = v.findViewById(R.id.id) as TextView
         var date: TextView = v.findViewById(R.id.date) as TextView
+//        var age: TextView = v.findViewById(R.id.age) as TextView
         var lyt_parent: LinearLayout = v.findViewById(R.id.lyt_parent) as LinearLayout
 
     }
@@ -57,6 +58,8 @@ class AdapterData constructor
             holder.name.text = o.name
             val dateFormat = "HH:mm:ss dd/MM/yy"
             holder.date.text = o.date.format(DateTimeFormatter.ofPattern(dateFormat))
+
+//            holder.age.text = o.age.toString()
 
             holder.lyt_parent.setOnClickListener { view ->
                 if (onItemClickListener != null) {

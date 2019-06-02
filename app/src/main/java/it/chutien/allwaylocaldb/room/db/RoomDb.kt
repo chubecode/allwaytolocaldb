@@ -9,7 +9,7 @@ import it.chutien.allwaylocaldb.room.model.Dog
 /**
  * Created by ChuTien on ${1/25/2017}.
  */
-@Database(entities = [Dog::class],version = 1,exportSchema = false)
+@Database(entities = [Dog::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class RoomDb : RoomDatabase() {
     abstract fun dogDao(): DogDao
