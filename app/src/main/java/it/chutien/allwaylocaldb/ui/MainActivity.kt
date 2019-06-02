@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Main) {
             insert_room.text = "ROOM INSERT (${viewModel.getSizeRoom()})"
             insert_realm.text = "REALM INSERT (${viewModel.getSizeRealm()})"
-            insert_box.text = "REALM INSERT (${viewModel.getSizeBox()})"
+            insert_box.text = "BOX INSERT (${viewModel.getSizeBox()})"
         }
     }
 }
