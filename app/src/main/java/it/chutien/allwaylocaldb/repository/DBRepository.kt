@@ -1,8 +1,5 @@
 package it.chutien.allwaylocaldb.repository
 
-import io.realm.RealmList
-import it.chutien.allwaylocaldb.objectbox.DogBox
-import it.chutien.allwaylocaldb.realm.model.DogRealmObject
 import it.chutien.allwaylocaldb.room.model.Dog
 
 /**
@@ -16,20 +13,6 @@ interface DBRepository {
 
     suspend fun getSizeRom(): Int
 
-    fun insertByRealm(dogRealmObject: DogRealmObject)
-
-    fun getByRealm(): ArrayList<DogRealmObject>
-
-    fun getSizeRealm(): Int
-
-    fun getSizeObjectBox(): Int
-
-    fun getByBox(): ArrayList<DogBox>
-
-    fun insertByBox(dogBox: DogBox)
-
     fun deleteAllRoom()
-    fun deleteAllRealm()
-    fun deleteAllBox()
 
 }

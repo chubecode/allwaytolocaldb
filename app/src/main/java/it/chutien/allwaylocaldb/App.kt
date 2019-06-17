@@ -2,6 +2,7 @@ package it.chutien.allwaylocaldb
 
 import android.app.Application
 import androidx.multidex.MultiDexApplication
+import com.facebook.stetho.Stetho
 import com.mooveit.library.Fakeit
 import it.chutien.allwaylocaldb.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -12,7 +13,7 @@ import java.util.*
 /**
  * Created by ChuTien on ${1/25/2017}.
  */
-class App : MultiDexApplication(){
+class App : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
@@ -20,7 +21,9 @@ class App : MultiDexApplication(){
             androidContext(this@App)
             modules(viewModelModule)
         }
-
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this)
+        }
         Fakeit.init()
     }
 }
