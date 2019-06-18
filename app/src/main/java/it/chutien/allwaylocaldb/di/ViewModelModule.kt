@@ -37,16 +37,16 @@ val viewModelModule = module(override = true) {
 //fun createRealmMySchemaModule(): RealmSchema {
 //    TODO("not implemented")
 //}
-
+//chrome://inspect/#devices
 fun createDatabaseRoomName() = "room_db"
 
 fun createRoom(dbRoomName: String, context: Context): RoomDb {
     //SafeRoom
-    val factory = SafeHelperFactory.fromUser(Editable.Factory.getInstance().newEditable("maydanggiaucaigido"))
+//    val factory = SafeHelperFactory.fromUser(Editable.Factory.getInstance().newEditable("key_encrypt_db"))
     return  Room
         .databaseBuilder(context, RoomDb::class.java, dbRoomName)
     .addMigrations(RoomMigration(1, 2)) // multi migration here
-        .openHelperFactory(factory)
+//        .openHelperFactory(factory)
         .build()
 
 }

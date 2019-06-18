@@ -17,9 +17,9 @@ object EncryptionUtil {
     fun encrypt(message: String) = Encoder.BuilderAES()
         .method(AES.Method.AES_CBC_PKCS5PADDING)
         .message(message)
-        .key("test key") // not necessary
+        .key("test key")
         .keySize(AES.Key.SIZE_128) // not necessary
-        .iVector("test vector") // not necessary
+//        .iVector("test vector") // not necessary
         .encrypt()
 
     // Decrypts a message
@@ -27,7 +27,6 @@ object EncryptionUtil {
         .message(encrypt)
         .method(AES.Method.AES_CBC_PKCS5PADDING)
         .key("test key", AES.Key.SIZE_128)
-        .iVector("test vector")
         .decrypt();
 }
 
