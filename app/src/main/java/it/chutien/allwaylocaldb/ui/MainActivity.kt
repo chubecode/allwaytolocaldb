@@ -20,11 +20,13 @@ import com.google.android.material.snackbar.Snackbar
 import it.chutien.allwaylocaldb.R
 import it.chutien.allwaylocaldb.databinding.ActivityMainBinding
 import it.chutien.allwaylocaldb.room.model.Dog
+import it.chutien.allwaylocaldb.utils.AppConstant
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,8 +47,9 @@ class MainActivity : AppCompatActivity() {
             setVariable(it.chutien.allwaylocaldb.BR.viewModel, viewModel)
         }
 
+
         insert_room.setOnClickListener {
-            viewModel.insertRoomDb()
+            viewModel.insertRoomDb(AppConstant.KEY_VALUE)
             GlobalScope.launch(Dispatchers.Main) {
                 timeQuery = System.currentTimeMillis()
                 showBottomSheetDialog(dogs = viewModel.getRoomDb())
@@ -88,7 +91,12 @@ class MainActivity : AppCompatActivity() {
         mBottomSheetDialog?.window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
         // set background transparent
-        (view.parent as View).setBackgroundColor(ContextCompat.getColor(applicationContext,android.R.color.transparent))
+        (view.parent as View).setBackgroundColor(
+            ContextCompat.getColor(
+                applicationContext,
+                android.R.color.transparent
+            )
+        )
 
         mBottomSheetDialog?.show()
         mBottomSheetDialog?.setOnDismissListener {

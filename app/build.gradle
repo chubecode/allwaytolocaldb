@@ -79,4 +79,6 @@ dependencies {
     //Fake It
     implementation 'com.github.moove-it:fakeit:v0.7'
 
+    compile 'ru.bullyboo.ecryption:encoder:1.0.3'
+
 }

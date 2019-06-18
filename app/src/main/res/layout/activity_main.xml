@@ -27,46 +27,6 @@
                     android:layout_gravity="center"
                     android:text="Room Insert"
                     android:theme="@style/Button.Primary"/>
-            <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/add_table_room"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="Add New Table"
-                    style="@style/Button.Primary.Borderless"/>
-            <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/insert_realm"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="Realm Insert"
-                    android:theme="@style/Button.Accent"/>
-            <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/add_table_realm"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="Add New Table"
-                    style="@style/Button.Accent.Borderless"/>
-            <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/insert_box"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="Box Insert"
-                    android:theme="@style/Button.Green"/>
-            <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/add_table_box"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="Add New Table"
-                    style="@style/Button.Green..Borderless"/>
 
 
         </LinearLayout>

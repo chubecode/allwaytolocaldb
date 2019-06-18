@@ -1,17 +1,17 @@
 package it.chutien.allwaylocaldb.ui
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import it.chutien.allwaylocaldb.R
 import it.chutien.allwaylocaldb.room.model.Dog
+import it.chutien.allwaylocaldb.utils.EncryptionUtil
 import java.util.*
-import android.os.Build
-import androidx.annotation.RequiresApi
-import java.time.format.DateTimeFormatter
 
 
 class AdapterData constructor
@@ -36,7 +36,7 @@ class AdapterData constructor
         // each data item is just a string in this case
         var name: TextView = v.findViewById(R.id.name) as TextView
         var id: TextView = v.findViewById(R.id.id) as TextView
-        var date: TextView = v.findViewById(R.id.date) as TextView
+        var name_decypted: TextView = v.findViewById(R.id.name_decypted) as TextView
 //        var age: TextView = v.findViewById(R.id.age) as TextView
         var lyt_parent: LinearLayout = v.findViewById(R.id.lyt_parent) as LinearLayout
 
@@ -56,8 +56,7 @@ class AdapterData constructor
             val o = items[position]
             holder.id.text = o.id
             holder.name.text = o.name
-            val dateFormat = "HH:mm:ss dd/MM/yy"
-            holder.date.text = o.date.format(DateTimeFormatter.ofPattern(dateFormat))
+            holder.name_decypted.text = EncryptionUtil.decrypt(o.name)
 
 //            holder.age.text = o.age.toString()
 
@@ -77,3 +76,5 @@ class AdapterData constructor
         fun onItemClick(view: View, obj: Dog, pos: Int)
     }
 }
+
+
